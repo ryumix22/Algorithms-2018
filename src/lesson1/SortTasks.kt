@@ -2,6 +2,9 @@
 
 package lesson1
 
+import java.io.File
+import java.util.*
+
 /**
  * Сортировка времён
  *
@@ -31,7 +34,15 @@ package lesson1
  * В случае обнаружения неверного формата файла бросить любое исключение.
  */
 fun sortTimes(inputName: String, outputName: String) {
-    TODO()
+    val list = mutableListOf<String>()
+    val outputStream = File(outputName).bufferedWriter()
+    list += File(inputName).readLines()
+    list.sort()
+    for (line in list) {
+        outputStream.write(line)
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -61,7 +72,28 @@ fun sortTimes(inputName: String, outputName: String) {
  * В случае обнаружения неверного формата файла бросить любое исключение.
  */
 fun sortAddresses(inputName: String, outputName: String) {
-    TODO()
+    val map = TreeMap<String, MutableList<String>>()
+    var list: List<String>
+    val keys: Set<String>
+    val outputStream = File(outputName).bufferedWriter()
+    var a = -1
+    for (line in File(inputName).readLines()) {
+        list = line.split("-")
+        var name = list[0].trim()
+        var address = list[1].trim()
+        if (map.containsKey(address)) {
+            map[address]?.add(name)
+        } else {
+            map[address] = mutableListOf(name)
+        }
+    }
+    keys = map.keys
+    for (line in keys) {
+        var str = map[line].toString()
+        outputStream.write(line + " - " + str.substring(1, str.length - 1))
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**

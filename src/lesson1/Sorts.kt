@@ -1,5 +1,4 @@
 package lesson1
-
 import java.util.*
 
 private val random = Random(Calendar.getInstance().timeInMillis)
