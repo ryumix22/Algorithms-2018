@@ -74,9 +74,7 @@ fun sortTimes(inputName: String, outputName: String) {
 fun sortAddresses(inputName: String, outputName: String) {
     val map = TreeMap<String, MutableList<String>>()
     var list: List<String>
-    val keys: Set<String>
     val outputStream = File(outputName).bufferedWriter()
-    var a = -1
     for (line in File(inputName).readLines()) {
         list = line.split("-")
         val name = list[0].trim()
@@ -87,8 +85,7 @@ fun sortAddresses(inputName: String, outputName: String) {
             map[address] = mutableListOf(name)
         }
     }
-    keys = map.keys
-    for (line in keys) {
+    for (line in map.keys) {
         val str = map[line].toString()
         outputStream.write(line + " - " + str.substring(1, str.length - 1))
         outputStream.newLine()
