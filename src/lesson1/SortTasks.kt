@@ -79,8 +79,8 @@ fun sortAddresses(inputName: String, outputName: String) {
     var a = -1
     for (line in File(inputName).readLines()) {
         list = line.split("-")
-        var name = list[0].trim()
-        var address = list[1].trim()
+        val name = list[0].trim()
+        val address = list[1].trim()
         if (map.containsKey(address)) {
             map[address]?.add(name)
         } else {
@@ -89,7 +89,7 @@ fun sortAddresses(inputName: String, outputName: String) {
     }
     keys = map.keys
     for (line in keys) {
-        var str = map[line].toString()
+        val str = map[line].toString()
         outputStream.write(line + " - " + str.substring(1, str.length - 1))
         outputStream.newLine()
     }
@@ -178,6 +178,9 @@ fun sortSequence(inputName: String, outputName: String) {
  * Результат: second = [1 3 4 9 9 13 15 20 23 28]
  */
 fun <T : Comparable<T>> mergeArrays(first: Array<T>, second: Array<T?>) {
-    TODO()
+    for (i in 0 until first.size) {
+        second[i] = first[i]
+    }
+    second.sort()
 }
 

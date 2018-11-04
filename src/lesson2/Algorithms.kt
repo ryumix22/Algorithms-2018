@@ -2,6 +2,8 @@
 
 package lesson2
 
+import java.io.File
+
 /**
  * Получение наибольшей прибыли (она же -- поиск максимального подмассива)
  * Простая
@@ -27,7 +29,27 @@ package lesson2
  * В случае обнаружения неверного формата файла бросить любое исключение.
  */
 fun optimizeBuyAndSell(inputName: String): Pair<Int, Int> {
-    TODO()
+    val list = File(inputName).readLines()
+    var maxDifference = 0
+    var minPrice = Integer.MAX_VALUE
+    var buy = 0
+    var sell = 0
+    var a = 0
+
+    for (i in 0 until list.size) {
+        when {
+            list[i].toInt() < minPrice -> {
+                minPrice = list[i].toInt()
+                a = i
+            }
+            list[i].toInt() - minPrice > maxDifference -> {
+                maxDifference = list[i].toInt() - minPrice
+                buy = a
+                sell = i
+            }
+        }
+    }
+    return Pair(buy + 1, sell + 1)
 }
 
 /**
@@ -76,8 +98,18 @@ fun optimizeBuyAndSell(inputName: String): Pair<Int, Int> {
  * Х   Х
  * Х х Х
  */
+private fun solver(number: Int, step: Int): Int {
+    return if (number == 1) 0
+    else (solver(number - 1, step) + step) % number
+}
+
 fun josephTask(menNumber: Int, choiceInterval: Int): Int {
-    TODO()
+    if (menNumber == 0) throw IllegalArgumentException("not 0")
+    return when (choiceInterval) {
+        1 -> menNumber
+        2 -> 1
+        else -> solver(menNumber, choiceInterval) + 1
+    }
 }
 
 /**
@@ -106,7 +138,28 @@ fun longestCommonSubstring(first: String, second: String): String {
  * Единица простым числом не считается.
  */
 fun calcPrimesNumber(limit: Int): Int {
-    TODO()
+    var result = 0
+    when (limit) {
+        0 -> return 0
+        1 -> return 0
+        else -> {
+            val list = mutableListOf<Int>()
+            for (i in 0..limit) list.add(1)
+            var i = 2
+            while (i * i <= limit) {
+                if (list[i] == 1) {
+                    var j = i * i
+                    while (j <= limit) {
+                        list[j] = 0
+                        j += i
+                    }
+                }
+                i++
+            }
+            for (i in 2..limit) if (list[i] == 1) result++
+            return result
+        }
+    }
 }
 
 /**
