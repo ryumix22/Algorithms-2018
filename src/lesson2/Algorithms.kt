@@ -168,8 +168,8 @@ fun calcPrimesNumber(limit: Int): Int {
         0 -> return 0
         1 -> return 0
         else -> {
-            val list = mutableListOf<Int>()
-            for (i in 0..limit) list.add(1)
+            val list = IntArray(limit + 1)
+            for (i in 0..limit) list[i] = 1
             var i = 2
             while (i * i <= limit) {
                 if (list[i] == 1) {
