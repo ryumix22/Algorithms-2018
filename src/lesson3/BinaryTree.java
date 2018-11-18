@@ -62,6 +62,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
 
     /**
      * Удаление элемента в дереве
+     * Ресурсоемкость - O(h)
+     * Трудоемкость - O(h)
      * Средняя
      */
     @Override
@@ -144,6 +146,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
 
         /**
          * Поиск следующего элемента
+         * Ресурсоемкость - O(h)
+         * Трудоемкость - O(h)
          * Средняя
          */
         private Node<T> findNext() {
