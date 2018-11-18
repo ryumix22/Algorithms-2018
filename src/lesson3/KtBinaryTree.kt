@@ -3,6 +3,7 @@ package lesson3
 import java.util.SortedSet
 import kotlin.NoSuchElementException
 
+
 // Attention: comparable supported but comparator is not
 class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSortedSet<T> {
 
@@ -11,7 +12,7 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
     override var size = 0
         private set
 
-    private class Node<T>(val value: T) {
+    private class Node<T>(var value: T) {
 
         var left: Node<T>? = null
 

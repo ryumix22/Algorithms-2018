@@ -11,7 +11,7 @@ import java.util.*;
 public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implements CheckableSortedSet<T> {
 
     private static class Node<T> {
-        final T value;
+        T value;
 
         Node<T> left = null;
 
@@ -66,8 +66,46 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      */
     @Override
     public boolean remove(Object o) {
-        // TODO
-        throw new NotImplementedError();
+        Node<T> result = remove(root, (T) o);
+        size--;
+        return (result != null);
+    }
+
+    private Node<T> remove(Node<T> start, T element) {
+        Node<T> node = start;
+        int compare = element.compareTo(start.value);
+        if (compare < 0) {
+            node.left = remove(node.left, element);
+        } else if (compare > 0) {
+            node.right = remove(node.right, element);
+        } else if (node.right != null) {
+            node.value = minimum(node.right).value;
+            node.right = remove(node.right, node.value);
+        } else {
+            if (node.left != null) {
+                node.value = maximum(node.left).value;
+                node.left = remove(node.left, node.value);
+            } else {
+                node = null;
+            }
+        }
+        return node;
+    }
+
+    private Node<T> minimum(Node<T> node) {
+        if (node.left == null) return node;
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    private Node<T> maximum(Node<T> node) {
+        if (node.right == null) return node;
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node;
     }
 
     @Override
@@ -109,8 +147,27 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
          * Средняя
          */
         private Node<T> findNext() {
-            // TODO
-            throw new NotImplementedError();
+            Node<T> that;
+            if (current != null) {
+                that = root;
+            } else return minimum();
+            Node<T> successor = null;
+            while (that != null) {
+                if (that.value.compareTo(current.value) > 0) {
+                    successor = that;
+                    that = that.left;
+                } else that = that.right;
+            }
+            return successor;
+        }
+
+        private Node<T> minimum() {
+            if (root == null) throw new NoSuchElementException();
+            Node<T> current = root;
+            while (current.left != null) {
+                current = current.left;
+            }
+            return current;
         }
 
         @Override
@@ -127,12 +184,13 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
 
         /**
          * Удаление следующего элемента
+         * Ресурсоемкость - O(h)
+         * Трудоемкость - O(h)
          * Сложная
          */
         @Override
         public void remove() {
-            // TODO
-            throw new NotImplementedError();
+            BinaryTree.this.remove(current.value);
         }
     }
 
@@ -156,6 +214,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
 
     /**
      * Для этой задачи нет тестов (есть только заготовка subSetTest), но её тоже можно решить и их написать
+     * Ресурсоемкость - O(h)
+     * Трудоемкость - O(h)
      * Очень сложная
      */
     @NotNull
@@ -167,13 +227,22 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
 
     /**
      * Найти множество всех элементов меньше заданного
+     * Ресурсоемкость - O(h)
+     * Трудоемкость - O(h)
      * Сложная
      */
     @NotNull
     @Override
     public SortedSet<T> headSet(T toElement) {
-        // TODO
-        throw new NotImplementedError();
+       BinaryTreeIterator iter = new BinaryTreeIterator();
+       SortedSet list = new TreeSet();
+       while (iter.hasNext()) {
+           T value = iter.next();
+           if (value.compareTo(toElement) < 0) {
+               list.add(value);
+           }
+       }
+       return list;
     }
 
     /**
@@ -183,8 +252,15 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
     @NotNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
-        // TODO
-        throw new NotImplementedError();
+        BinaryTreeIterator iter = new BinaryTreeIterator();
+        SortedSet list = new TreeSet();
+        while (iter.hasNext()) {
+            T value = iter.next();
+            if (value.compareTo(fromElement) >= 0) {
+                list.add(value);
+            }
+        }
+        return list;
     }
 
     @Override
