@@ -76,15 +76,15 @@ class BinaryTreeTest {
             assertTrue(binarySet.checkInvariant())
         }
 
-        val tree1 = create()
-        tree1.add(5)
-        tree1.add(2)
-        tree1.add(4)
-        tree1.add(8)
-        tree1.add(6)
-        tree1.add(7)
-        tree1.remove(5)
-        assertEquals(5, tree1.size)
+        val tree = create()
+        tree.add(5)
+        tree.add(2)
+        tree.add(4)
+        tree.add(8)
+        tree.add(6)
+        tree.add(7)
+        tree.remove(5)
+        assertEquals(5, tree.size)
     }
 
     @Test
@@ -119,6 +119,18 @@ class BinaryTreeTest {
                 assertEquals(treeIt.next(), binaryIt.next())
             }
         }
+
+        val tree = create()
+        val treeIt = tree.iterator()
+        tree.add(5)
+        tree.add(2)
+        tree.add(4)
+        tree.add(8)
+        tree.add(6)
+        tree.add(7)
+        treeIt.next()
+        treeIt.remove()
+        assertEquals(5, tree.size)
     }
 
     @Test
